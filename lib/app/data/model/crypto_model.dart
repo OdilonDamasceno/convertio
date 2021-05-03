@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:convertio/app/data/model/money_model.dart';
+import 'package:flutter/foundation.dart';
 
 class Crypto {
   String? name;
@@ -16,33 +16,16 @@ class Crypto {
 
   Crypto.fromJson(Map<String, dynamic> json, String name) {
     this.name = name;
-    this.dolar = new Money(name: "Dolar", price: json["USD"]);
-    debugPrint("Dolar done");
-    this.euro = new Money(price: json['EUR'], name: "Euro");
-    debugPrint("Euro done");
-
-    this.real = new Money(price: json['BRL'], name: "Real");
-    debugPrint("Real done");
-
-    this.yen = new Money(price: json['JPY'], name: "Japanese Yen");
-    debugPrint("Yen done");
-
-    this.lev = new Money(price: json['BGN'], name: "Lev");
-    debugPrint("Lev done");
-
-    this.libra = new Money(name: "Libra Esterlina", price: json['GBP']);
-    debugPrint("Libra done");
-
-    this.forint = new Money(name: "Forint", price: json['HUF']);
-    debugPrint("Forint done");
-
-    this.zloty = new Money(name: "Zloty", price: json['PLN']);
-    debugPrint("Zloty done");
-
-    this.rublo = new Money(name: "Rublo", price: json['RUB']);
-    debugPrint("Rublo done");
-
-    this.kuna = new Money(name: "Kuna", price: json['HRK']);
+    this.dolar = Money(name: "Dolar", price: json["USD"] ?? 0.0);
+    this.euro = Money(price: json['EUR'] ?? 0.0, name: "Euro");
+    this.real = Money(price: json['BRL'] ?? 0.0, name: "Real");
+    this.yen = Money(price: json['JPY'] ?? 0.0, name: "Japanese Yen");
+    this.lev = Money(price: json['BGN'] ?? 0.0, name: "Lev");
+    this.libra = Money(name: "Libra Esterlina", price: json['GBP'] ?? 0.0);
+    this.forint = Money(name: "Forint", price: json['HUF'] ?? 0.0);
+    this.zloty = Money(name: "Zloty", price: json['PLN'] ?? 0.0);
+    this.rublo = Money(name: "Rublo", price: json['RUB'] ?? 0.0);
+    this.kuna = Money(name: "Kuna", price: json['HRK'] ?? 0.0);
     debugPrint("Crypto from json done");
   }
 }

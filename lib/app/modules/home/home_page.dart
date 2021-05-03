@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final ExchangeRepository repository = ExchangeRepository();
+  ExchangeRepository? repository;
   Future<Exchange?>? future;
 
   List<Map<String, dynamic>>? cryptos;
@@ -24,11 +24,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    future = repository.getSource();
+    repository = ExchangeRepository();
+    future = repository!.getSource();
     if (future == null) {
       debugPrint("Future has no data");
       setState(() {
-        future = repository.getSource();
+        future = repository!.getSource();
       });
     }
     super.initState();
@@ -43,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                 backgroundColor: Colors.grey[800],
                 onPressed: () {
                   setState(() {
-                    future = repository.getSource();
+                    future = repository!.getSource();
                   });
                 },
                 child: Icon(Icons.refresh),
@@ -62,17 +63,19 @@ class _HomePageState extends State<HomePage> {
                   {"index": 1, "value": snapshot.data!.eTH},
                   {"index": 2, "value": snapshot.data!.xRP},
                 ];
+
+                var criptoValues = cryptos![cryptoValue!]["value"];
                 coins = [
-                  {"index": 0, "value": cryptos![cryptoValue!]["value"].dolar},
-                  {"index": 1, "value": cryptos![cryptoValue!]["value"].euro},
-                  {"index": 2, "value": cryptos![cryptoValue!]["value"].forint},
-                  {"index": 3, "value": cryptos![cryptoValue!]["value"].kuna},
-                  {"index": 4, "value": cryptos![cryptoValue!]["value"].lev},
-                  {"index": 5, "value": cryptos![cryptoValue!]["value"].libra},
-                  {"index": 6, "value": cryptos![cryptoValue!]["value"].real},
-                  {"index": 7, "value": cryptos![cryptoValue!]["value"].rublo},
-                  {"index": 8, "value": cryptos![cryptoValue!]["value"].yen},
-                  {"index": 9, "value": cryptos![cryptoValue!]["value"].zloty},
+                  {"index": 0, "value": criptoValues.dolar},
+                  {"index": 1, "value": criptoValues.euro},
+                  {"index": 2, "value": criptoValues.forint},
+                  {"index": 3, "value": criptoValues.kuna},
+                  {"index": 4, "value": criptoValues.lev},
+                  {"index": 5, "value": criptoValues.libra},
+                  {"index": 6, "value": criptoValues.real},
+                  {"index": 7, "value": criptoValues.rublo},
+                  {"index": 8, "value": criptoValues.yen},
+                  {"index": 9, "value": criptoValues.zloty},
                 ];
 
                 return Column(
@@ -138,13 +141,15 @@ class _HomePageState extends State<HomePage> {
                           child: DropdownButton<String>(
                             hint: Center(child: Text("Moeda")),
                             isExpanded: true,
-                            autofocus: true,
                             value: nameCoin,
                             items: coins!.map((coin) {
                               return DropdownMenuItem<String>(
                                 value: coin["value"].name,
                                 child: Center(
-                                    child: Text("${coin["value"].name}")),
+                                    child: Text(
+                                  "${coin["value"].name}",
+                                  overflow: TextOverflow.ellipsis,
+                                )),
                                 onTap: () {
                                   coinValue = coin["index"];
                                 },
