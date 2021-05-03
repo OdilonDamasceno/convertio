@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime date = DateTime.now();
     return SafeArea(
       child: Scaffold(
         floatingActionButton: hasCoin && hasCrypto
@@ -96,12 +97,18 @@ class _HomePageState extends State<HomePage> {
                                 TextSpan(
                                   text: coins![coinValue!]["value"]
                                           .price
-                                          .toString() +
-                                      " $nameCoin",
+                                          .toString()
+                                          .replaceAll(".", ",") +
+                                      " $nameCoin\n",
                                   style: TextStyle(
                                     fontSize: 35,
                                     color: Colors.grey[800],
                                   ),
+                                ),
+                                TextSpan(
+                                  text:
+                                      "${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}. ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}",
+                                  style: TextStyle(fontSize: 11),
                                 ),
                               ],
                             ),
